@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-
+// Este archivo la crea entittyframework, es la migrations
+// Basicamente entittyframework hace la las tablas, con las claves primarias y con todos sus atributos. 
 namespace Agenda_api.Migrations
 {
     public partial class V01 : Migration

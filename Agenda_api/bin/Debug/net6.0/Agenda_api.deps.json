@@ -13,7 +13,6 @@
           "Microsoft.EntityFrameworkCore.Relational": "6.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
           "Microsoft.EntityFrameworkCore.Sqlite": "6.0.10",
-          "Microsoft.EntityFrameworkCore.Sqlite.Core": "6.0.10",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.10",
           "Swashbuckle.AspNetCore": "6.2.3",
           "Swashbuckle.AspNetCore.Swagger": "6.4.0"
