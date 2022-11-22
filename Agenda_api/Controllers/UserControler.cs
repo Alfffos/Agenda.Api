@@ -29,11 +29,17 @@ namespace Agenda_api.Controllers
         [Route("GetOne/{Id}")]                                              //Creo un metodo de HttpGet para que me devuelva el User por Id.
         public IActionResult GetOneById(int Id)
         {
-            List<User> usersToReturn = _userRepository.GetAllUsers();
-            usersToReturn.Where(x => x.Id == Id).ToList();                  // Sentencia LINQ
-            if (usersToReturn.Count > 0)
-                return Ok(usersToReturn);
-            return NotFound("Usuario inexistente");                 //Si no encuentra ningun user retorna un NotFound
+            
+            //List<User> usersToReturn = _userRepository.GetAllUsers();
+            //usersToReturn.Where(x => x.Id == Id).ToList();                   //Este codigo estaba en el Notion, pero no retorna x id, hace un getAll.
+            //if (usersToReturn.Count > 0)
+            //    return Ok(usersToReturn);
+            //return NotFound("Usuario inexistente"); 
+            
+            List<User> UserForId = _userRepository.GetAllUsers().Where(x => x.Id == Id).ToList();
+            if (UserForId.Count > 0)                                                                        //Esta sentecia LINQ la programe para que busque x id.
+                return  Ok(UserForId);
+            return NotFound("Usuario inexistente"); //Si no encuentra ningun user retorna un NotFound
         }
 
         [HttpPost]

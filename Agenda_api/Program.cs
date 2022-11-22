@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 
  #region
  builder.Services.AddSingleton<UserRepository>();               //ESTO NO SE PARA QUE SE USA PERO ESTABA EN EL NOTION DEL PROFE... MAS ADELANTE SEGURAMENTE VEA PARA QUE SIRVE. IMPORTANTE VER LO DE SINGELTON CREO QUE ES DEL TOKEN.
- builder.Services.AddSingleton<ContactRepository>();
+ builder.Services.AddSingleton<ContactRepository>();           // Esto es para que el ContactRepository y el UserRepository puedan ser usados como servicios y yo pueda llamar a los metodos (Para que yo los pueda inyectar) en este caso como Singelton.
  #endregion
 
 //Add Context
