@@ -2745,11 +2745,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alfon\\Desktop\\repo\\Repo para regularizar\\AgendaApi\\Agenda_Api\\Agenda_api\\Agenda_api.csproj",
+      "projectUniqueName": "C:\\Users\\alfon\\OneDrive\\Escritorio\\Repos\\Agenda.Api\\Agenda_api\\Agenda_api.csproj",
       "projectName": "Agenda_api",
-      "projectPath": "C:\\Users\\alfon\\Desktop\\repo\\Repo para regularizar\\AgendaApi\\Agenda_Api\\Agenda_api\\Agenda_api.csproj",
+      "projectPath": "C:\\Users\\alfon\\OneDrive\\Escritorio\\Repos\\Agenda.Api\\Agenda_api\\Agenda_api.csproj",
       "packagesPath": "C:\\Users\\alfon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alfon\\Desktop\\repo\\Repo para regularizar\\AgendaApi\\Agenda_Api\\Agenda_api\\obj\\",
+      "outputPath": "C:\\Users\\alfon\\OneDrive\\Escritorio\\Repos\\Agenda.Api\\Agenda_api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\alfon\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2834,7 +2834,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

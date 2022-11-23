@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HJcSc3lJw5Vd8I5TIUcc2x0HqLPJHepNSVG9C37zglMWJ44Oo3UpNOqqzh0MvjlWYQVSJw4BJy8QnNifIWtg7w==",
+  "dgSpecHash": "a0lHP3KFdVp5t6NaXqatmLvoJGibimqvJqpo+XFxsH+7x85VzA08btRDQHOlJdAzcvkuOvTVGyGihIPbQRg6yw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\alfon\\Desktop\\repo\\Repo para regularizar\\AgendaApi\\Agenda_Api\\Agenda_api\\Agenda_api.csproj",
+  "projectFilePath": "C:\\Users\\alfon\\OneDrive\\Escritorio\\Repos\\Agenda.Api\\Agenda_api\\Agenda_api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alfon\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\alfon\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
