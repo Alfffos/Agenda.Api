@@ -1,43 +1,52 @@
 ﻿
-using Agenda_api.DTOs;
+
+
+using Agenda_api.Data;
 using Agenda_api.Entities;
+using Agenda_api.Models.DTOs;
+using Agenda_api.Repository.Interfaces;
+using AutoMapper;
 
 namespace Agenda_api.Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
-        List<User> FakeUsers = new List<User>()
-            {
-                new User()      //En esta lista estoy creando 2 objets de tipo usuarios fake para probar (SOLO PARA PROBAR!!)
-                {
-                    Email = "a@asdasd.com", 
-                    Name = "Pablo",
-                    Password = "passwordresegura",
-                    Id = 1,
-                },
-                new User()                                // !!! Esto lo tengo que cambiar para hacer que el repository trabajo con la base de datos porque ahora esta trabajando con estos 2 FakeUsers.
-                {
-                    Email = "b@asdasd.com",
-                    Name = "Mateo",
-                    Password = "passwordresegura1",
-                    Id = 2,
-                }
-            };
-        public List<User> GetAllUsers()
+        private readonly AgendaApiContext _context;                               // Inyecto el Context y el Mapper
+        private readonly IMapper _mapper;
+        public UserRepository(AgendaApiContext context, IMapper mapper)
         {
-            return FakeUsers; //en este metodo le estoy retornando una lista de Fake users, osea los 2 usuarios que estan arriba.
+            _context=context;
+            _mapper=mapper;                     
         }
-        public bool CreateUser(UserForCreationDTO UserDTO) //Este metodo CreateUser de tipo bool crea un usuario con los parametros del DTO y retorna true
+
+        public void Create(CreateAndUpdateUser dto)
         {
-            User user = new User()
-            {
-                Name = UserDTO.Name,
-                Password = UserDTO.Password,
-                Id = UserDTO.Id,
-                Email = UserDTO.Email,
-            };
-            FakeUsers.Add(user);
-            return true;
+             _context.Users.Add(_mapper.Map<User>(dto));
+        }
+
+        public void Delete(int id)
+        {
+            _context.Users.Remove(_context.Users.Single(u => u.Id == id));
+        }
+
+        public List<User> GetAll()
+        {
+            return _context.Users.ToList();
+        }
+
+        public User? GetById(int userId)
+        {
+            return _context.Users.SingleOrDefault(u => u.Id == userId);
+        }
+
+        public void Update(CreateAndUpdateUser dto)
+        {
+            _context.Users.Add(_mapper.Map<User>(dto));
+        }
+
+        public User? Validate(AutenticationRequestBody aurhRequestBody)
+        {
+            return  _context.Users.FirstOrDefault(p => p.UserName == aurhRequestBody.UserName && p.Password == aurhRequestBody.Password);
         }
     }
 }

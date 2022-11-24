@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Agenda_api.Data
 {
     public class AgendaApiContext : DbContext
-    {                                                                           //En este documente creo Usuarios y Concatctos para estos usuarios.
+    {                                                                           //En este documente creo Usuarios y Contactos que Entity Framework haga las migrations.
         public DbSet<User> Users { get; set; }
         public DbSet<Contact> Contacts { get; set; }
 
@@ -67,7 +67,7 @@ namespace Agenda_api.Data
             modelBuilder.Entity<Contact>().HasData(mariaC, pepeC, jaimitoC);
             modelBuilder.Entity<User>().HasData(luis, karen);
 
-            modelBuilder.Entity<User>().HasMany<Contact>(u => u.Contacts).WithOne(c => c.User);
+            modelBuilder.Entity<User>().HasMany<Contact>(u => u.Contacts).WithOne(c => c.User);  // Correspondencia de N Contacts a 1 User.
 
             base.OnModelCreating(modelBuilder);
 

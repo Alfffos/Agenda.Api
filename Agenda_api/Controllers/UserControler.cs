@@ -3,18 +3,19 @@ using Agenda_api.Repository;
 using Agenda_api.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Agenda_api.DTOs;
+using Agenda_api.Models.DTOs;
+using Agenda_api.Repository.Interfaces;
 
 namespace Agenda_api.Controllers
 
-                  // Los controladores se encargan de manejar todas las peticiones del Front End hacia el Back End y desde el Back End hacia el Front End.
+                  // Los controladores se encargan de manejar todas las peticiones del Front , en este caso consumiento la interfaz IUserRepository.
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
-        private UserRepository _userRepository { get; set; }            //Aca estoy inyectando el repository
-        public UserController(UserRepository userRepository)            //Creo el constructor de la clase que recibe como paremetro un objeto  de tipo UserRepository y lo llamo userRepository
+        private readonly IUserRepository _userRepository;          //Aca estoy inyectando el IUserRepository.
+        public UserController(IUserRepository userRepository)            //Creo el constructor de la clase que recibe como paremetro un objeto  de tipo IUserRepository y lo llamo userRepository
         {
             _userRepository = userRepository;
         }
@@ -22,35 +23,65 @@ namespace Agenda_api.Controllers
         [HttpGet]
         public IActionResult GetAll()                   //Creo un metodo de HttpGet que me devuelve todos los usuarios.
         {
-            return Ok(_userRepository.GetAllUsers());       //Gracias a la inyeccion llamo al metodo "GetAllUsers()" del repository.
+            return Ok(_userRepository.GetAll());       //Gracias a la inyeccion llamo al metodo "GetAllUsers()" del IUserRepository.
         }
 
         [HttpGet]
-        [Route("GetOne/{Id}")]                                              //Creo un metodo de HttpGet para que me devuelva el User por Id.
+        [Route("{Id}")]                                              //Creo un metodo de HttpGet para que me devuelva el User por Id.
         public IActionResult GetOneById(int Id)
         {
-            
-            //List<User> usersToReturn = _userRepository.GetAllUsers();
-            //usersToReturn.Where(x => x.Id == Id).ToList();                   //Este codigo estaba en el Notion, pero no retorna x id, hace un getAll.
-            //if (usersToReturn.Count > 0)
-            //    return Ok(usersToReturn);
-            //return NotFound("Usuario inexistente"); 
-            
-            List<User> UserForId = _userRepository.GetAllUsers().Where(x => x.Id == Id).ToList();
-            if (UserForId.Count > 0)                                                                        //Esta sentecia LINQ la programe para que busque x id.
-                return  Ok(UserForId);
-            return NotFound("Usuario inexistente"); //Si no encuentra ningun user retorna un NotFound
+            try
+            {
+               return Ok(_userRepository.GetById(Id));        //Consumo GetById() de IUserRepository.
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
-        public IActionResult CreateUser(UserForCreationDTO UserDTO)             //Metodo para crear un User
+        public IActionResult CreateUser(CreateAndUpdateUser dto)             //Metodo para crear un User
         {
-            _userRepository.CreateUser(UserDTO);                     //Gracias a la iyeccion uso el metodo CreateUser del Repository
-
-            return NoContent();                       // ACA NO SE PORQUE RETORNA UN NOCONTENT EN VEZ DE UN OK.    
-
+            try
+            {
+                _userRepository.Create(dto);                                 //Uso el metodo Create de la interface IUserRepository.
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Created("Created", dto);
         }
 
+        [HttpPut]
+        public IActionResult UpdateUser(CreateAndUpdateUser dto)       //Actualizo User.
+        {
+            try
+            {
+                _userRepository.Update(dto);                //Paso como parámetro el dto CreateAndUpdateUser que contiene los nuevos datos.
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return NoContent();
+        }
+
+        [HttpDelete]                                   
+        [Route("{Id}")]                                                     
+        public IActionResult DeleteUser(int Id)                                 //User Delet                
+        {
+            try
+            {
+                _userRepository.Delete(Id);              //Paso como parametro el Id.
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok();
+        }
         
             
     }

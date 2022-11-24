@@ -1,27 +1,39 @@
-﻿using Agenda_api.Entities;
+﻿using Agenda_api.Data;
+using Agenda_api.Entities;
+using Agenda_api.Models.DTOs;
+using Agenda_api.Repository.Interfaces;
+using AutoMapper;
 
 namespace Agenda_api.Repository
 {
-    public class ContactRepository
+    public class ContactRepository : IContactRepository
     {
-        public static List<Contact> FakeContacts = new List<Contact>()      //Aca estoy creando 2 Fake Contacts para poder usarlo de prueba.
+        private readonly AgendaApiContext _context;
+        private readonly IMapper _mapper;
+        public ContactRepository(AgendaApiContext context, IMapper mapper)
         {
-            new Contact()
-            {
-                Name = "Pablo",
-                CelularNumber = 12345,
-                Id= 1,
-            },                                  // Esto lo tengo que cambiar para que el repository use la base de datos en vez de estos 2 FakeContacts.
-            new Contact()
-            {
-                Name = "Maria",
-                CelularNumber = 123456,
-                Id=2,
-            }
-        };
-        public List<Contact> GetAll()                 //En esta linea creo una lista GetAll() que me de vuelve en lista los Fake contacts de arriba.
+            _context=context;
+            _mapper=mapper;
+        }
+
+        public void Create(CreateAndUpdateContact dto)
         {
-            return FakeContacts;
+             _context.Contacts.Add(_mapper.Map<Contact>(dto));
+        }
+
+        public void Delete(int id)
+        {
+            _context.Contacts.Remove(_context.Contacts.Single(c => c.Id == id));
+        }
+
+        public List<Contact> GetAll()
+        {
+            return _context.Contacts.ToList();
+        }
+
+        public void Update(CreateAndUpdateContact dto)
+        {
+            _context.Contacts.Update(_mapper.Map<Contact>(dto));
         }
     }
 }

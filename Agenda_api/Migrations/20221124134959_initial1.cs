@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-// Este archivo la crea entittyframework, es la migrations
-// Basicamente entittyframework hace la las tablas, con las claves primarias y con todos sus atributos. 
+
 namespace Agenda_api.Migrations
 {
-    public partial class V01 : Migration
+    public partial class initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,7 +26,7 @@ namespace Agenda_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contact",
+                name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -39,25 +38,50 @@ namespace Agenda_api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contact", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contact_Users_UserId",
+                        name: "FK_Contacts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "LastName", "Name", "Password", "UserName" },
+                values: new object[] { 1, "karenbailapiola@gmail.com", "Lasot", "Karen", "Pa$$w0rd", "karenpiola" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "LastName", "Name", "Password", "UserName" },
+                values: new object[] { 2, "elluismidetotoras@gmail.com", "Gonzales", "Luis Gonzalez", "lamismadesiempre", "luismitoto" });
+
+            migrationBuilder.InsertData(
+                table: "Contacts",
+                columns: new[] { "Id", "CelularNumber", "Name", "TelephoneNumber", "UserId" },
+                values: new object[] { 1, 341457896, "Jaimito", null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Contacts",
+                columns: new[] { "Id", "CelularNumber", "Name", "TelephoneNumber", "UserId" },
+                values: new object[] { 2, 34156978, "Pepe", 422568, 2 });
+
+            migrationBuilder.InsertData(
+                table: "Contacts",
+                columns: new[] { "Id", "CelularNumber", "Name", "TelephoneNumber", "UserId" },
+                values: new object[] { 3, 11425789, "Maria", null, 1 });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Contact_UserId",
-                table: "Contact",
+                name: "IX_Contacts_UserId",
+                table: "Contacts",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contact");
+                name: "Contacts");
 
             migrationBuilder.DropTable(
                 name: "Users");
