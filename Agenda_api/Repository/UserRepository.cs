@@ -21,12 +21,14 @@ namespace Agenda_api.Repository
 
         public void Create(CreateAndUpdateUser dto)
         {
-             _context.Users.Add(_mapper.Map<User>(dto));
+            _context.Users.Add(_mapper.Map<User>(dto));
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             _context.Users.Remove(_context.Users.Single(u => u.Id == id));
+            _context.SaveChanges();
         }
 
         public List<User> GetAll()
@@ -42,11 +44,22 @@ namespace Agenda_api.Repository
         public void Update(CreateAndUpdateUser dto)
         {
             _context.Users.Add(_mapper.Map<User>(dto));
+            _context.SaveChanges();
         }
 
-        public User? Validate(AutenticationRequestBody aurhRequestBody)
+        public User? Validate(AutenticationRequestBody authRequestBody)
         {
-            return  _context.Users.FirstOrDefault(p => p.UserName == aurhRequestBody.UserName && p.Password == aurhRequestBody.Password);
+            return  _context.Users.FirstOrDefault(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
+        }
+        public void Archive(int id)
+        {
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);
+            if (user != null)
+            {
+                user.State = Models.Enum.State.Archived;
+                _context.Update(user);
+            }
+            _context.SaveChanges();
         }
     }
 }

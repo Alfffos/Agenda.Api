@@ -5,12 +5,12 @@ namespace Agenda_api.Repository.Interfaces
 {
     public interface IUserRepository
     {
-        public User? Validate(AutenticationRequestBody aurhRequestBody);
+        public User? Validate(AutenticationRequestBody authRequestBody);
         public User? GetById(int userId);
         public List<User> GetAll();
         public void Create(CreateAndUpdateUser dto);
         public void Update(CreateAndUpdateUser dto);
         public void Delete(int id);
-
+        public void Archive(int id);
     }
 }

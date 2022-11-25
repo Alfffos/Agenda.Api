@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agenda_api.Migrations
 {
     [DbContext(typeof(AgendaApiContext))]
-    [Migration("20221124134959_initial1")]
-    partial class initial1
+    [Migration("20221125041104_Add-Migration DbSqlServe")]
+    partial class AddMigrationDbSqlServe
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,6 +91,12 @@ namespace Agenda_api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Rol")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("State")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -107,6 +113,8 @@ namespace Agenda_api.Migrations
                             LastName = "Gonzales",
                             Name = "Luis Gonzalez",
                             Password = "lamismadesiempre",
+                            Rol = 1,
+                            State = 0,
                             UserName = "luismitoto"
                         },
                         new
@@ -116,6 +124,8 @@ namespace Agenda_api.Migrations
                             LastName = "Lasot",
                             Name = "Karen",
                             Password = "Pa$$w0rd",
+                            Rol = 1,
+                            State = 0,
                             UserName = "karenpiola"
                         });
                 });

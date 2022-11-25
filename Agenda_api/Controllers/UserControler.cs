@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Agenda_api.Models.DTOs;
 using Agenda_api.Repository.Interfaces;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Agenda_api.Controllers
 
@@ -12,12 +14,15 @@ namespace Agenda_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : Controller
     {
+        private readonly IMapper _automapper;
         private readonly IUserRepository _userRepository;          //Aca estoy inyectando el IUserRepository.
-        public UserController(IUserRepository userRepository)            //Creo el constructor de la clase que recibe como paremetro un objeto  de tipo IUserRepository y lo llamo userRepository
+        public UserController(IUserRepository userRepository, IMapper automapper)            //Creo el constructor de la clase que recibe como paremetro un objeto  de tipo IUserRepository y lo llamo userRepository
         {
             _userRepository = userRepository;
+            _automapper = automapper;
         }
 
         [HttpGet]
@@ -30,9 +35,11 @@ namespace Agenda_api.Controllers
         [Route("{Id}")]                                              //Creo un metodo de HttpGet para que me devuelva el User por Id.
         public IActionResult GetOneById(int Id)
         {
+            User user = _userRepository.GetById(Id);
+            var dto = _automapper.Map<GetUserByIdResponse>(user);      //Consumo el GetUserByIdResponse desde el automapper.
             try
             {
-               return Ok(_userRepository.GetById(Id));        //Consumo GetById() de IUserRepository.
+               return Ok(dto);        
             }
             catch (Exception ex)
             {
@@ -68,21 +75,26 @@ namespace Agenda_api.Controllers
             return NoContent();
         }
 
-        [HttpDelete]                                   
-        [Route("{Id}")]                                                     
+        [HttpDelete]                                                                                       
         public IActionResult DeleteUser(int Id)                                 //User Delet                
         {
             try
-            {
-                _userRepository.Delete(Id);              //Paso como parametro el Id.
+            {   if(_userRepository.GetById(Id).Name =="Admin")
+                {
+                    _userRepository.Delete(Id);         //Paso como parametro el Id.
+                }
+                else
+                {
+                    _userRepository.Archive(Id);
+                }
+                return StatusCode(204);
+
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }
-            return Ok();
-        }
-        
-            
+            } 
+        }     
     }
 }

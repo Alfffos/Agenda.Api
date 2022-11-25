@@ -11,6 +11,7 @@ namespace Agenda_api.Profiles
         public UserProfile() 
         {
             CreateMap<User, CreateAndUpdateUser>();
+            CreateMap<GetUserByIdResponse, User>();
         }
 
     }

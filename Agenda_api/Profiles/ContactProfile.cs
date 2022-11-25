@@ -10,7 +10,7 @@ namespace Agenda_api.Profiles
     {
         public ContactProfile() 
         {
-            CreateMap<Contact, CreateAndUpdateContact>();
+            CreateMap<CreateAndUpdateContact, Contact>();
         }
     }
 }

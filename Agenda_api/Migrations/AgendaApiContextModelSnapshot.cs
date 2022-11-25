@@ -89,6 +89,12 @@ namespace Agenda_api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Rol")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("State")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -105,6 +111,8 @@ namespace Agenda_api.Migrations
                             LastName = "Gonzales",
                             Name = "Luis Gonzalez",
                             Password = "lamismadesiempre",
+                            Rol = 1,
+                            State = 0,
                             UserName = "luismitoto"
                         },
                         new
@@ -114,6 +122,8 @@ namespace Agenda_api.Migrations
                             LastName = "Lasot",
                             Name = "Karen",
                             Password = "Pa$$w0rd",
+                            Rol = 1,
+                            State = 0,
                             UserName = "karenpiola"
                         });
                 });

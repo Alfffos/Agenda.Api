@@ -4,7 +4,7 @@
 
 namespace Agenda_api.Migrations
 {
-    public partial class initial1 : Migration
+    public partial class AddMigrationDbSqlServe : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,9 @@ namespace Agenda_api.Migrations
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", nullable: false)
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    State = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rol = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,13 +51,13 @@ namespace Agenda_api.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Email", "LastName", "Name", "Password", "UserName" },
-                values: new object[] { 1, "karenbailapiola@gmail.com", "Lasot", "Karen", "Pa$$w0rd", "karenpiola" });
+                columns: new[] { "Id", "Email", "LastName", "Name", "Password", "Rol", "State", "UserName" },
+                values: new object[] { 1, "karenbailapiola@gmail.com", "Lasot", "Karen", "Pa$$w0rd", 1, 0, "karenpiola" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Email", "LastName", "Name", "Password", "UserName" },
-                values: new object[] { 2, "elluismidetotoras@gmail.com", "Gonzales", "Luis Gonzalez", "lamismadesiempre", "luismitoto" });
+                columns: new[] { "Id", "Email", "LastName", "Name", "Password", "Rol", "State", "UserName" },
+                values: new object[] { 2, "elluismidetotoras@gmail.com", "Gonzales", "Luis Gonzalez", "lamismadesiempre", 1, 0, "luismitoto" });
 
             migrationBuilder.InsertData(
                 table: "Contacts",
