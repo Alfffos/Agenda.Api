@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agenda_api.Migrations
 {
     [DbContext(typeof(AgendaApiContext))]
-    [Migration("20221125041104_Add-Migration DbSqlServe")]
-    partial class AddMigrationDbSqlServe
+    [Migration("20221125135433_Last")]
+    partial class Last
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -124,7 +124,7 @@ namespace Agenda_api.Migrations
                             LastName = "Lasot",
                             Name = "Karen",
                             Password = "Pa$$w0rd",
-                            Rol = 1,
+                            Rol = 0,
                             State = 0,
                             UserName = "karenpiola"
                         });

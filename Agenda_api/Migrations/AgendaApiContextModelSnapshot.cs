@@ -122,7 +122,7 @@ namespace Agenda_api.Migrations
                             LastName = "Lasot",
                             Name = "Karen",
                             Password = "Pa$$w0rd",
-                            Rol = 1,
+                            Rol = 0,
                             State = 0,
                             UserName = "karenpiola"
                         });

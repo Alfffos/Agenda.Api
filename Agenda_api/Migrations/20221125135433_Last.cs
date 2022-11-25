@@ -4,7 +4,7 @@
 
 namespace Agenda_api.Migrations
 {
-    public partial class AddMigrationDbSqlServe : Migration
+    public partial class Last : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace Agenda_api.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "LastName", "Name", "Password", "Rol", "State", "UserName" },
-                values: new object[] { 1, "karenbailapiola@gmail.com", "Lasot", "Karen", "Pa$$w0rd", 1, 0, "karenpiola" });
+                values: new object[] { 1, "karenbailapiola@gmail.com", "Lasot", "Karen", "Pa$$w0rd", 0, 0, "karenpiola" });
 
             migrationBuilder.InsertData(
                 table: "Users",
