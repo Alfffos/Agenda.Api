@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DGZwiA6XHLYGm3rPZ9mSzZ6l5JAZbk/xNj0fEltmDBxVSeEBYgRap28uZY7qghsjxznOQFD9ePLSGVR++pPV8Q==",
+  "dgSpecHash": "GqFb0++W86h++IjdcHlwXlyzCJ2qpw7J0W3kACmr1vuutUOVnw4Y2PWYqDShYgpJpj/BPK8o4p+ozg8m19RsiA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\alfon\\Desktop\\repo\\Repo para regularizar\\Ultima version\\Agenda.Api\\Agenda_api\\Agenda_api.csproj",
+  "projectFilePath": "C:\\Users\\alfon\\OneDrive\\Escritorio\\Repos\\ultimo\\Agenda.Api\\Agenda_api\\Agenda_api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alfon\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\alfon\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

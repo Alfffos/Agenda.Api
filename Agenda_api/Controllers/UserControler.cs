@@ -36,7 +36,7 @@ namespace Agenda_api.Controllers
         public IActionResult GetOneById(int Id)
         {
             User user = _userRepository.GetById(Id);
-            var dto = _automapper.Map<GetUserByIdResponse>(user);      //Consumo el GetUserByIdResponse desde el automapper.
+            var dto = _automapper.Map<GetUserByIdResponse>(User);      //Consumo el GetUserByIdResponse desde el automapper.
             try
             {
                return Ok(dto);        
