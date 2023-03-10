@@ -28,12 +28,21 @@ namespace Agenda_api.Controllers
             return Ok(_contactRepository.GetAllByUser(userId));
         }
         [HttpGet]
-        [Route("{Id}")]
+        [Route("{id}")]          // Saco los {} del "Get_Id" porque si pongo [] corchetes me agrega como propiedad nueva en la peticion del ID
 
         public IActionResult GetOne(int id)
         {
-            int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);       //Accedo a la Claim
-            return Ok(_contactRepository.GetAllByUser(userId).Where(x => x.Id == id));
+            try                                     
+            {
+                int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);       //Accedo a la Claim
+                return Ok(_contactRepository.GetAllByUser(userId).Where(x => x.Id == id));
+            }
+            catch (Exception ex)                          // Agrego el try and catch para que tire un mensaje de error por las dudas.
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return NoContent();
         }
 
         [HttpPost]
@@ -49,6 +58,7 @@ namespace Agenda_api.Controllers
         {
             _contactRepository.Update(dto);
             return NoContent();
+
         }
         [HttpDelete]
         public IActionResult DeleteContactById(int id)
@@ -56,11 +66,13 @@ namespace Agenda_api.Controllers
             var role = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("role"));
             if(role.Value == "Admin")
             {
-                _userRepository.Delete(id);
+                
+                _contactRepository.Delete(id);
             }
             else
             {
                 _userRepository.Archive(id);
+                
             }
             return NoContent();
         }

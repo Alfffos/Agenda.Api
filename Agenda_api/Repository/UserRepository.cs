@@ -6,6 +6,7 @@ using Agenda_api.Entities;
 using Agenda_api.Models.DTOs;
 using Agenda_api.Repository.Interfaces;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agenda_api.Repository
 {
@@ -16,50 +17,171 @@ namespace Agenda_api.Repository
         public UserRepository(AgendaApiContext context, IMapper mapper)
         {
             _context=context;
-            _mapper=mapper;                     
+            _mapper=mapper;
         }
 
-        public void Create(CreateAndUpdateUser dto)
+        public async Task Archive(int id)
         {
-            _context.Users.Add(_mapper.Map<User>(dto));
-            _context.SaveChanges();
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);             //Guardo el User a cambiar en una variable
+            user.State = Models.Enum.State.Archived;                                // Le cambio el valor de active a archive       
+            _context.Update(user);                                                  //Actualizo el user
+             await _context.SaveChangesAsync();
+            
         }
 
-        public void Delete(int id)
+        public async Task<User> Create(User user)
+        {
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+        public async Task Update(CreateAndUpdateUser dto)
+        {
+            var userItem = _context.Users.FirstOrDefaultAsync(u => u.Id == user.id);
+
+
+            //  _context.Users.AddAsync(_mapper.Map<User>(dto));
+            
+        }
+
+        public async Task Delete(int id)
         {
             _context.Users.Remove(_context.Users.Single(u => u.Id == id));
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public List<User> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            return _context.Users.ToList();
+            return await _context.Users.ToListAsync();     //OK
         }
 
-        public User? GetById(int userId)
+        public async Task<User> GetById(int userId)
         {
-            return _context.Users.SingleOrDefault(u => u.Id == userId);
+            return await _context.Users.FindAsync(userId);   //
         }
 
-        public void Update(CreateAndUpdateUser dto)
+        public Task<User> Validate(string name)
         {
-            _context.Users.Add(_mapper.Map<User>(dto));
-            _context.SaveChanges();
+            throw new NotImplementedException();
         }
 
-        public User? Validate(AutenticationRequestBody authRequestBody)
-        {
-            return  _context.Users.FirstOrDefault(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
-        }
-        public void Archive(int id)
-        {
-            User user = _context.Users.SingleOrDefault(u => u.Id == id);
-            if (user != null)
-            {
-                user.State = Models.Enum.State.Archived;
-                _context.Update(user);
-            }
-            _context.SaveChanges();
-        }
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //    public void Create(CreateAndUpdateUser dto)
+        //    {
+        //        _context.Users.Add(_mapper.Map<User>(dto));
+        //        _context.SaveChanges();
+        //    }
+
+        //    public void Delete(int id)
+        //    {
+        //        _context.Users.Remove(_context.Users.Single(u => u.Id == id));
+        //        _context.SaveChanges();
+        //    }
+
+        //    //public List<User> GetAll()
+        //    //{
+        //    //    return _context.Users.ToList();
+        //    //}
+
+
+
+
+
+
+
+
+
+        //    public User? GetById(int userId)
+        //    {
+        //        return _context.Users.SingleOrDefault(u => u.Id == userId);
+        //    }
+
+        //    public void Update(CreateAndUpdateUser dto)
+        //    {
+        //        _context.Users.Add(_mapper.Map<User>(dto));
+        //        _context.SaveChanges();
+        //    }
+
+        //    public User? Validate(AutenticationRequestBody authRequestBody)
+        //    {
+        //        return  _context.Users.FirstOrDefault(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
+        //    }
+        //    public void Archive(int id)
+        //    {
+        //        User user = _context.Users.SingleOrDefault(u => u.Id == id);
+        //        if (user != null)
+        //        {
+        //            user.State = Models.Enum.State.Archived;
+        //            _context.Update(user);
+        //        }
+        //        _context.SaveChanges();
+        //    }
+
+
+
+
+
+
+        //    public void Update(User dto)
+        //    {
+        //        _context.Users.Add(_mapper.Map<User>(dto));
+        //        _context.SaveChanges();
+        //    }
+
+        //}
     }
 }

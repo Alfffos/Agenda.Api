@@ -3,6 +3,7 @@ using Agenda_api.Entities;
 using Agenda_api.Models.DTOs;
 using Agenda_api.Repository.Interfaces;
 using AutoMapper;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Agenda_api.Repository
 {
@@ -27,8 +28,9 @@ namespace Agenda_api.Repository
 
         public void Delete(int id)
         {
-            _context.Contacts.Remove(_context.Contacts.Single(c => c.Id == id));
+            _context.Contacts.Remove(_context.Contacts.Single(c => c.Id == id));      
             _context.SaveChanges();
+            
         }
 
         public List<Contact> GetAllByUser(int id)
@@ -38,8 +40,18 @@ namespace Agenda_api.Repository
 
         public void Update(CreateAndUpdateContact dto)
         {
+            
             _context.Contacts.Update(_mapper.Map<Contact>(dto));
             _context.SaveChanges();
+
         }
+        //public void Update(CreateAndUpdateContact dto)
+        //{
+        //    Contact New_contact = _mapper.Map<Contact>(dto);
+
+        //    _context.Contacts.Update(_mapper.Map<Contact>(New_contact));
+        //    _context.SaveChanges();
+        //}
     }
+
 }

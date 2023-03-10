@@ -7,6 +7,8 @@ using Agenda_api.Models.DTOs;
 using Agenda_api.Repository.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata.Ecma335;
+using Agenda_api.Data;
 
 namespace Agenda_api.Controllers
 
@@ -19,6 +21,7 @@ namespace Agenda_api.Controllers
     {
         private readonly IMapper _automapper;
         private readonly IUserRepository _userRepository;          //Aca estoy inyectando el IUserRepository.
+    
         public UserController(IUserRepository userRepository, IMapper automapper)            //Creo el constructor de la clase que recibe como paremetro un objeto  de tipo IUserRepository y lo llamo userRepository
         {
             _userRepository = userRepository;
@@ -33,40 +36,70 @@ namespace Agenda_api.Controllers
 
         [HttpGet]
         [Route("{Id}")]                                              //Creo un metodo de HttpGet para que me devuelva el User por Id.
-        public IActionResult GetOneById(int Id)
+        public async Task<IActionResult> GetOneById(int Id)
         {
-            User user = _userRepository.GetById(Id);
-            var dto = _automapper.Map<GetUserByIdResponse>(User);      //Consumo el GetUserByIdResponse desde el automapper.
             try
             {
-               return Ok(dto);        
+                var User_Id = await _userRepository.GetById(Id);
+
+                if (User_Id == null)
+                {
+                    return NotFound();
+                }
+                var dto = _automapper.Map<GetUserByIdResponse>(User_Id);
+                return Ok(dto);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex .Message);
             }
+            
+            
+                       //Consumo el dto GetUserById ya mappeado de User.
+            
+            
+            
+            //try
+            //{
+            //   return Ok(dto);        
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
         }
 
         [HttpPost]
-        public IActionResult CreateUser(CreateAndUpdateUser dto)             //Metodo para crear un User
+        public async Task<IActionResult> CreateUser(CreateAndUpdateUser dto)             //Metodo para crear un User
         {
             try
             {
-                _userRepository.Create(dto);                                 //Uso el metodo Create de la interface IUserRepository.
+                var user = _automapper.Map<User>(dto);
+
+                //new_user = await _userRepository.CreateUser(new_user);
+
+                await _userRepository.Create(user);                                 //Uso el metodo Create de la interface IUserRepository.
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message);  
             }
             return Created("Created", dto);
         }
 
         [HttpPut]
-        public IActionResult UpdateUser(CreateAndUpdateUser dto)       //Actualizo User.
+        public async IActionResult UpdateUser(int id,CreateAndUpdateUser dto)       //Actualizo User.
         {
             try
             {
-                _userRepository.Update(dto);                //Paso como parámetro el dto CreateAndUpdateUser que contiene los nuevos datos.
+                var userMapped = _automapper.Map<User>(dto);
+                var userItem = await _userRepository.GetById(id);
+                if (userMapped == null)
+                {
+                    return NotFound();
+                }
+
+                await _userRepository.Update(dto);                //Paso como parámetro el dto CreateAndUpdateUser que contiene los nuevos datos.
             }
             catch (Exception ex)
             {
@@ -75,26 +108,100 @@ namespace Agenda_api.Controllers
             return NoContent();
         }
 
-        [HttpDelete]                                                                                       
-        public IActionResult DeleteUser(int Id)                                 //User Delet                
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateUser(int Id,CreateAndUpdateUser dto)
+        //{
+        //     await _context.Users.FindAsync(Id);
+        //   // User user =  _userRepository.GetById(Id);
+
+        //    User dto_maped =  _automapper.Map<User>(dto);
+
+        //    _userRepository.Update(dto_maped);            //Vs Code me genero un metodo en IUserRepository
+        //    await _context.SaveChangesAsync();
+
+        //    //var New_Put_User = await _automapper.Map<CreateAndUpdateUser>(Put_User);
+
+        //    return NoContent();
+
+
+        //    //try
+        //    //{
+        //    //    if (id != _userRepository.user.Id)
+        //    //    {
+        //    //        return BadRequest();
+        //    //    }
+        //    //}
+        //    //catch(Exception ex)
+        //    //{
+        //    //    return BadRequest(ex.Message);
+        //    //}
+        //}
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser(int Id)
         {
             try
-            {   if(_userRepository.GetById(Id).Name =="Admin")
+            {
+                var user = await _userRepository.GetById(Id);                //busco el user 
+
+                if (user == null)                                           // pregunto si es nulo, de serlo retorno Not Found.
                 {
-                    _userRepository.Delete(Id);         //Paso como parametro el Id.
+                    return NotFound();
+                }
+
+                if (user.Rol== 0)
+                {
+                    await _userRepository.Archive(user);                    // si es un user con ROL admin lo archivo y si no lo remuevo.
+
+                     
                 }
                 else
                 {
-                    _userRepository.Archive(Id);
+                   await _userRepository.Delete(user);
                 }
-                return StatusCode(204);
 
+                return NoContent();
+                
 
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
-            } 
-        }     
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpDelete]
+        //public async Task<IActionResult> DeleteUser(int Id)                                 //User Delet                
+        //{
+        //    try
+        //    {
+        //        if (_userRepository.GetById(Id).Role ==0)        //En esta parte seguramente hay que cambiar esta condicion y preguntar si el ROL es 1 o 0
+        //        {
+        //            _userRepository.Archive(Id);         //Paso como parametro el Id.
+        //        }
+        //        else
+        //        {
+        //            _userRepository.Delete(Id);
+        //        }
+        //        return StatusCode(204);
+
+
+        //        //    }
+        //        //    catch (Exception ex)
+        //        //    {
+        //        //        return BadRequest(ex.Message);
+        //        //    } 
+        //        //}     
+        //    }
     }
-}

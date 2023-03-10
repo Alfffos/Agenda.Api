@@ -10,10 +10,14 @@ namespace Agenda_api.Profiles
     {
         public UserProfile() 
         {
-            //CreateMap<User, CreateAndUpdateUser>();
-            //CreateMap<GetUserByIdResponse, User>();
+            //Estos 2 maps sirven para enviar los Dto sin los datos sesibles.
+            CreateMap<User, CreateAndUpdateUser>();                              // Primero le paso la entidad a mapear en este caso User, y luego la propiedad
+            CreateMap<User, GetUserByIdResponse>();                              // a la cual quiero que mapee, en este caso es  un Dto.
+
+            //Estos 2 mapas sirver para recibir datos de creacion de parte del front
             CreateMap<CreateAndUpdateUser, User>();
-            CreateMap<GetUserByIdResponse, User>();
+            //CreateMap<GetUserByIdResponse, User>();
+            
 
         }
 
