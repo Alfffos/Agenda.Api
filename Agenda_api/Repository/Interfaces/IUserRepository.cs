@@ -12,7 +12,7 @@ namespace Agenda_api.Repository.Interfaces
         Task Delete(User user);
         Task Archive (User user);
         Task <User> Create(User user);
-        Task Update(CreateAndUpdateUser dto);
+        Task Update(int id_user ,CreateAndUpdateUser dto);
 
         //Task<User> Validate(string name);
 

@@ -35,13 +35,18 @@ namespace Agenda_api.Repository
             await _context.SaveChangesAsync();
             return user;
         }
-        public async Task Update(CreateAndUpdateUser dto)
+        public async Task Update(int id_user, CreateAndUpdateUser dto)
         {
-            var userItem = _context.Users.FirstOrDefaultAsync(u => u.Id == user.id);
+            var id = id_user; 
+            var userItem = _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-
-            //  _context.Users.AddAsync(_mapper.Map<User>(dto));
+            if (userItem != null)
+            {
+                await _context.Users.AddAsync(_mapper.Map<User>(dto));
+                await _context.SaveChangesAsync();
+            }
             
+
         }
 
         public async Task Delete(int id)

@@ -88,18 +88,21 @@ namespace Agenda_api.Controllers
         }
 
         [HttpPut]
-        public async IActionResult UpdateUser(int id,CreateAndUpdateUser dto)       //Actualizo User.
+        public async Task<IActionResult> UpdateUser(int id_user,CreateAndUpdateUser dto)       //Actualizo User.
         {
             try
             {
-                var userMapped = _automapper.Map<User>(dto);
-                var userItem = await _userRepository.GetById(id);
-                if (userMapped == null)
+                  
+                  
+                var userItem = await _userRepository.GetById(id_user); //Traigo el User de la DB para saber si existe.
+
+                if (userItem == null)
                 {
-                    return NotFound();
+                    return NotFound();  //retorno NotFound si es que no lo encuentra.
                 }
 
-                await _userRepository.Update(dto);                //Paso como parámetro el dto CreateAndUpdateUser que contiene los nuevos datos.
+                await _userRepository.Update(id_user,dto);    //Paso como parámetro el dto CreateAndUpdateUser que contiene los nuevos datos y el id para buscar el usuario en el repo.
+                
             }
             catch (Exception ex)
             {
