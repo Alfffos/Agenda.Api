@@ -178,12 +178,6 @@ namespace Agenda_api.Controllers
 
 
 
-
-
-
-
-
-
         //[HttpDelete]
         //public async Task<IActionResult> DeleteUser(int Id)                                 //User Delet                
         //{

@@ -29,16 +29,17 @@ namespace Agenda_api.Repository
             
         }
 
-        public async Task<User> Create(User user)
+        public async Task Create(CreateAndUpdateUser dto)
         {
-            _context.Add(user);
-            await _context.SaveChangesAsync();
-            return user;
+            _context.Users.Add(_mapper.Map<User>(dto));
+           
+             await _context.SaveChangesAsync();
+            
         }
         public async Task Update(int id_user, CreateAndUpdateUser dto)
         {
             var id = id_user; 
-            var userItem = _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var userItem = _context.Users.FirstOrDefaultAsync(u => u.Id == id);    
 
             if (userItem != null)
             {
@@ -65,61 +66,12 @@ namespace Agenda_api.Repository
             return await _context.Users.FindAsync(userId);   //
         }
 
-        public Task<User> Validate(string name)
+
+
+        public async Task<User?> Validate(AutenticationRequestBody authRequestBody)
         {
-            throw new NotImplementedException();
+           return await _context.Users.FirstAsync(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
         }
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
