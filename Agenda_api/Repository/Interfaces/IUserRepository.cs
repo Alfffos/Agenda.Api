@@ -9,16 +9,13 @@ namespace Agenda_api.Repository.Interfaces
         Task<List<User>> GetAll();
         Task<User> GetById(int id);
 
-        Task Delete(User user);
-        Task Archive (User user);
+        Task Delete(int id);
+        Task Archive (int id);
         Task Create(CreateAndUpdateUser user);
         Task Update(int id_user, CreateAndUpdateUser dto);
         Task<User> Validate(AutenticationRequestBody authRequestBody);
 
         //Task<User> Create(CreateAndUpdateUser user);
-        // Task
-
-
         //public User? Validate(AutenticationRequestBody authRequestBody);
         //public User? GetById(int userId);
         //public List<User> GetAll();
@@ -26,6 +23,5 @@ namespace Agenda_api.Repository.Interfaces
         //public void Update(CreateAndUpdateUser dto);
         //public void Delete(int id);
         //public void Archive(int id);
-        //public void Update(User dto_maped);        // nuevo metodo generado por vscode
     }
 }

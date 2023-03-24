@@ -12,7 +12,7 @@ using Agenda_api.Data;
 
 namespace Agenda_api.Controllers
 
-                  // Los controladores se encargan de manejar todas las peticiones del Front , en este caso consumiento la interfaz IUserRepository.
+// Los controladores se encargan de manejar todas las peticiones del Front , en este caso consumiento la interfaz IUserRepository.
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,7 +21,7 @@ namespace Agenda_api.Controllers
     {
         private readonly IMapper _automapper;
         private readonly IUserRepository _userRepository;          //Aca estoy inyectando el IUserRepository.
-    
+
         public UserController(IUserRepository userRepository, IMapper automapper)            //Creo el constructor de la clase que recibe como paremetro un objeto  de tipo IUserRepository y lo llamo userRepository
         {
             _userRepository = userRepository;
@@ -51,14 +51,14 @@ namespace Agenda_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex .Message);
+                return BadRequest(ex.Message);
             }
-            
-            
-                       //Consumo el dto GetUserById ya mappeado de User.
-            
-            
-            
+
+
+            //Consumo el dto GetUserById ya mappeado de User.
+
+
+
             //try
             //{
             //   return Ok(dto);        
@@ -74,26 +74,26 @@ namespace Agenda_api.Controllers
         {
             try
             {
-                var user = _automapper.Map<User>(dto);
+                //var user = _automapper.Map<User>(dto);       // esto lo mapeo en le repository.
 
                 //new_user = await _userRepository.CreateUser(new_user);
 
-                await _userRepository.Create(user);                                 //Uso el metodo Create de la interface IUserRepository.
+                await _userRepository.Create(dto);                                 //Uso el metodo Create de la interface IUserRepository.
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);  
+                return BadRequest(ex.Message);
             }
             return Created("Created", dto);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser(int id_user,CreateAndUpdateUser dto)       //Actualizo User.
+        public async Task<IActionResult> UpdateUser(int id_user, CreateAndUpdateUser dto)       //Actualizo User.
         {
             try
             {
-                  
-                  
+
+
                 var userItem = await _userRepository.GetById(id_user); //Traigo el User de la DB para saber si existe.
 
                 if (userItem == null)
@@ -101,8 +101,8 @@ namespace Agenda_api.Controllers
                     return NotFound();  //retorno NotFound si es que no lo encuentra.
                 }
 
-                await _userRepository.Update(id_user,dto);    //Paso como parámetro el dto CreateAndUpdateUser que contiene los nuevos datos y el id para buscar el usuario en el repo.
-                
+                await _userRepository.Update(id_user, dto);    //Paso como parámetro el dto CreateAndUpdateUser que contiene los nuevos datos y el id para buscar el usuario en el repo.
+
             }
             catch (Exception ex)
             {
@@ -147,27 +147,27 @@ namespace Agenda_api.Controllers
             {
                 var user = await _userRepository.GetById(Id);                //busco el user 
 
-                if (user == null)                                           // pregunto si es nulo, de serlo retorno Not Found.
+                if (user== null)                                           // pregunto si es nulo, de serlo retorno Not Found.
                 {
                     return NotFound();
                 }
 
                 if (user.Rol== 0)
                 {
-                    await _userRepository.Archive(user);                    // si es un user con ROL admin lo archivo y si no lo remuevo.
+                    await _userRepository.Archive(Id);                    // si es un user con ROL admin lo archivo y si no lo remuevo.
 
-                     
+
                 }
                 else
                 {
-                   await _userRepository.Delete(user);
+                    await _userRepository.Delete(Id);
                 }
 
                 return NoContent();
-                
+
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -202,3 +202,4 @@ namespace Agenda_api.Controllers
         //        //}     
         //    }
     }
+}

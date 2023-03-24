@@ -20,41 +20,41 @@ namespace Agenda_api.Repository
             _mapper=mapper;
         }
 
-        public async Task Archive(int id)
-        {
-            User user = _context.Users.SingleOrDefault(u => u.Id == id);             //Guardo el User a cambiar en una variable
-            user.State = Models.Enum.State.Archived;                                // Le cambio el valor de active a archive       
-            _context.Update(user);                                                  //Actualizo el user
-             await _context.SaveChangesAsync();
-            
-        }
+        //public async Task Archive(int id)
+        //{
+        //    User user = _context.Users.SingleOrDefault(u => u.Id == id);             //Guardo el User a cambiar en una variable
+        //    user.State = Models.Enum.State.Archived;                                // Le cambio el valor de active a archive       
+        //    _context.Update(user);                                                  //Actualizo el user
+        //     await _context.SaveChangesAsync();
+        //}
 
         public async Task Create(CreateAndUpdateUser dto)
         {
-            _context.Users.Add(_mapper.Map<User>(dto));
+            _context.Users.Add(_mapper.Map<User>(dto));    //mapeado de dto a user.
            
              await _context.SaveChangesAsync();
             
         }
         public async Task Update(int id_user, CreateAndUpdateUser dto)
         {
+
             var id = id_user; 
             var userItem = _context.Users.FirstOrDefaultAsync(u => u.Id == id);    
 
             if (userItem != null)
             {
-                await _context.Users.AddAsync(_mapper.Map<User>(dto));
+                await _context.Users.AddAsync(_mapper.Map<User>(dto));   // aca mapeo el dto a user y se lo agrego al context.
                 await _context.SaveChangesAsync();
             }
             
 
         }
 
-        public async Task Delete(int id)
-        {
-            _context.Users.Remove(_context.Users.Single(u => u.Id == id));
-            await _context.SaveChangesAsync();
-        }
+        //public async Task Delete(int id)
+        //{
+        //    _context.Users.Remove(_context.Users.Single(u => u.Id == id));
+        //    await _context.SaveChangesAsync();
+        //}
 
         public async Task<List<User>> GetAll()
         {
@@ -73,7 +73,20 @@ namespace Agenda_api.Repository
            return await _context.Users.FirstAsync(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
         }
 
+        public async Task Delete(int id)
+        {
+            _context.Users.Remove(_context.Users.Single(u => u.Id == id));
+            await _context.SaveChangesAsync();
+        }
 
+        public async Task Archive(int id)
+        {
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);             //Guardo el User a cambiar en una variable
+           user.State = Models.Enum.State.Archived;                                // Le cambio el valor de active a archive       
+           _context.Update(user);                                                  //Actualizo el user
+           await _context.SaveChangesAsync();
+
+        }
 
 
 
@@ -93,12 +106,6 @@ namespace Agenda_api.Repository
         //    //{
         //    //    return _context.Users.ToList();
         //    //}
-
-
-
-
-
-
 
 
 
@@ -127,10 +134,6 @@ namespace Agenda_api.Repository
         //        }
         //        _context.SaveChanges();
         //    }
-
-
-
-
 
 
         //    public void Update(User dto)
