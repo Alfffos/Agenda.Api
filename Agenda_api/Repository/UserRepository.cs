@@ -39,11 +39,19 @@ namespace Agenda_api.Repository
         {
 
             var id = id_user; 
-            var userItem = _context.Users.FirstOrDefaultAsync(u => u.Id == id);    
+            var userItem =  await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user_update = dto;
 
             if (userItem != null)
             {
-                await _context.Users.AddAsync(_mapper.Map<User>(dto));   // aca mapeo el dto a user y se lo agrego al context.
+                userItem.Name = user_update.Name;
+                userItem.LastName = user_update.LastName;
+                userItem.UserName = user_update.UserName;
+                userItem.Email = user_update.Email;
+                userItem.Password = user_update.Password;
+
+
+                //await _context.Users.AddAsync(_mapper.Map<User>(dto));   // aca mapeo el dto a user y se lo agrego al context.
                 await _context.SaveChangesAsync();
             }
             
