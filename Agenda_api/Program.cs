@@ -124,6 +124,12 @@ builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntentica
 );
 
 
+//Cors para que el navegador pueda acceder a los endpoints
+builder.Services.AddCors(options => options.AddPolicy("AllowWebapp",
+                                    builder =>builder.AllowAnyOrigin()
+                                              .AllowAnyHeader()
+                                              .AllowAnyMethod()));
+
 var config = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile(new ContactProfile());
@@ -147,6 +153,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseCors("AllowWebapp");
 
 app.UseHttpsRedirection();
 

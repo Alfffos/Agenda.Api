@@ -54,6 +54,11 @@ namespace Agenda_api.Repository
             return await _context.Contacts.Where(c => c.User.Id == id).ToListAsync();
         }
 
+        public async Task<List<Contact>> Get_fav(int id)  //Recibe el id del User como parametro y devuelve una lista de tipo Contacts.
+        {
+            return await _context.Contacts.Where(u => u.User.Id == id && u.Favorite).ToListAsync(); // Consulta por el Usuario correspondiente y si esta en favs.
+        }
+
         public async Task Update(int id, CreateAndUpdateContact dto)
         {
             int contac_id = id;
@@ -65,12 +70,14 @@ namespace Agenda_api.Repository
                 contacItem.Name = contac_map.Name;
                 contacItem.CelularNumber = contac_map.CelularNumber;
                 contacItem.TelephoneNumber = contac_map.TelephoneNumber;
+                contacItem.Favorite = contac_map.Favorite;
                 
                 /*wait _context.Contacts.AddAsync(_mapper.Map<Contact>(dto));*/
                 await _context.SaveChangesAsync();
             }
                                     
         }
+        
     }
 }
 

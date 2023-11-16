@@ -18,6 +18,7 @@ public class Contact
     [ForeignKey("UserId")]
     public User User { get; set; }
     public int UserId { get; set; }
+    public bool Favorite { get; set; }  
 
 }
 

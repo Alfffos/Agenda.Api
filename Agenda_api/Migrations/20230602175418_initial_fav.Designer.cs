@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agenda_api.Migrations
 {
     [DbContext(typeof(AgendaApiContext))]
-    [Migration("20221125135433_Last")]
-    partial class Last
+    [Migration("20230602175418_initial_fav")]
+    partial class initial_fav
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,9 @@ namespace Agenda_api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("CelularNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Favorite")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -49,6 +52,7 @@ namespace Agenda_api.Migrations
                         {
                             Id = 3,
                             CelularNumber = 11425789,
+                            Favorite = false,
                             Name = "Maria",
                             UserId = 1
                         },
@@ -56,6 +60,7 @@ namespace Agenda_api.Migrations
                         {
                             Id = 2,
                             CelularNumber = 34156978,
+                            Favorite = false,
                             Name = "Pepe",
                             TelephoneNumber = 422568,
                             UserId = 2
@@ -64,6 +69,7 @@ namespace Agenda_api.Migrations
                         {
                             Id = 1,
                             CelularNumber = 341457896,
+                            Favorite = false,
                             Name = "Jaimito",
                             UserId = 1
                         });

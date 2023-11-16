@@ -12,6 +12,8 @@ namespace Agenda_api.Repository.Interfaces
         Task Update(int id,CreateAndUpdateContact dto);
         Task Delete(int id);
 
+        Task <List<Contact>> Get_fav(int id);
+
 
 
 
