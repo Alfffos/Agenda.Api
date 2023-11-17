@@ -28,6 +28,7 @@ namespace Agenda_api.Repository
                 Description = dto.Description,
                 Name = dto.Name,
                 TelephoneNumber = dto.TelephoneNumber,
+                Favorite = dto.favorite,
                 UserId = userId                                // aca es donde se le asigna el usuario al contacto creado.
    
             };

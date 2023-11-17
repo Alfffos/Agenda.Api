@@ -29,6 +29,9 @@ namespace Agenda_api.Controllers
             int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
             return Ok(await _contactRepository.GetAllByUser(userId));
         }
+
+
+
         [HttpGet]
         [Route("{id}")]          // Saco los {} del "Get_Id" porque si pongo [] corchetes me agrega como propiedad nueva en la peticion del ID
 
