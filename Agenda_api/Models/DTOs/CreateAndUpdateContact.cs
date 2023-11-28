@@ -7,8 +7,8 @@ namespace Agenda_api.Models.DTOs
     {
         [Required]
         public string Name { get; set; }
-        public int? CelularNumber { get; set; }
-        public int? TelephoneNumber { get; set; }
+        public string? CelularNumber { get; set; }
+        public string? TelephoneNumber { get; set; }
         public bool favorite { get; set; }
 
         public string Description = String.Empty;
