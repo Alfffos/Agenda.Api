@@ -11,7 +11,6 @@ namespace Agenda_api.Profiles
         public ContactProfile() 
         {
             CreateMap<CreateAndUpdateContact, Contact>();
-            // CreateMap<Contact, CreateAndUpdateContact>(); ???
         }
     }
 }

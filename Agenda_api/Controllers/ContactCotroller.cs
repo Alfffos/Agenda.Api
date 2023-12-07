@@ -24,10 +24,10 @@ namespace Agenda_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()                   //Creo un metodo GetAll() que consume de la interfaz de IContactRepositoy el metodo GetAll().
+        public async Task<IActionResult> GetAll()                   //Este metodo sirve para listar todos los usuarios 
         {
-            int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
-            return Ok(await _contactRepository.GetAllByUser(userId));
+            int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);     //Accedo a la claim
+            return Ok(await _contactRepository.GetAllByUser(userId));           
         }
 
 

@@ -14,7 +14,6 @@ namespace Agenda_api.Models.DTOs
         public string Description = String.Empty;
         public User? User;
 
-        // falta 
-        
+                
     }
 }
