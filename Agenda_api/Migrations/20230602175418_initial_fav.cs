@@ -4,7 +4,7 @@
 
 namespace Agenda_api.Migrations
 {
-    public partial class Last : Migration
+    public partial class initial_fav : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,7 +36,8 @@ namespace Agenda_api.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     CelularNumber = table.Column<int>(type: "INTEGER", nullable: true),
                     TelephoneNumber = table.Column<int>(type: "INTEGER", nullable: true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Favorite = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,18 +62,18 @@ namespace Agenda_api.Migrations
 
             migrationBuilder.InsertData(
                 table: "Contacts",
-                columns: new[] { "Id", "CelularNumber", "Name", "TelephoneNumber", "UserId" },
-                values: new object[] { 1, 341457896, "Jaimito", null, 1 });
+                columns: new[] { "Id", "CelularNumber", "Favorite", "Name", "TelephoneNumber", "UserId" },
+                values: new object[] { 1, 341457896, false, "Jaimito", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Contacts",
-                columns: new[] { "Id", "CelularNumber", "Name", "TelephoneNumber", "UserId" },
-                values: new object[] { 2, 34156978, "Pepe", 422568, 2 });
+                columns: new[] { "Id", "CelularNumber", "Favorite", "Name", "TelephoneNumber", "UserId" },
+                values: new object[] { 2, 34156978, false, "Pepe", 422568, 2 });
 
             migrationBuilder.InsertData(
                 table: "Contacts",
-                columns: new[] { "Id", "CelularNumber", "Name", "TelephoneNumber", "UserId" },
-                values: new object[] { 3, 11425789, "Maria", null, 1 });
+                columns: new[] { "Id", "CelularNumber", "Favorite", "Name", "TelephoneNumber", "UserId" },
+                values: new object[] { 3, 11425789, false, "Maria", null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contacts_UserId",

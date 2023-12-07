@@ -39,7 +39,7 @@ namespace Agenda_api.Data
             {
                 Id = 1,
                 Name = "Jaimito",
-                CelularNumber = 341457896,
+                CelularNumber = "341457896",
                 Description = "Plomero",
                 TelephoneNumber = null,
                 UserId = karen.Id,
@@ -49,9 +49,9 @@ namespace Agenda_api.Data
             {
                 Id = 2,
                 Name = "Pepe",
-                CelularNumber = 34156978,
+                CelularNumber = "34156978",
                 Description = "Papa",
-                TelephoneNumber = 422568,
+                TelephoneNumber = "422568",
                 UserId = luis.Id,
             };
 
@@ -59,7 +59,7 @@ namespace Agenda_api.Data
             {
                 Id = 3,
                 Name = "Maria",
-                CelularNumber = 011425789,
+                CelularNumber = "011425789",
                 Description = "Jefa",
                 TelephoneNumber = null,
                 UserId = karen.Id,

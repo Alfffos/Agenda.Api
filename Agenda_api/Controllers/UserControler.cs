@@ -12,7 +12,7 @@ using Agenda_api.Data;
 
 namespace Agenda_api.Controllers
 
-// Los controladores se encargan de manejar todas las peticiones del Front , en este caso consumiento la interfaz IUserRepository.
+
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -59,14 +59,6 @@ namespace Agenda_api.Controllers
 
 
 
-            //try
-            //{
-            //   return Ok(dto);        
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
         }
 
         [HttpPost]
@@ -74,9 +66,6 @@ namespace Agenda_api.Controllers
         {
             try
             {
-                //var user = _automapper.Map<User>(dto);       // esto lo mapeo en le repository.
-
-                //new_user = await _userRepository.CreateUser(new_user);
 
                 await _userRepository.Create(dto);                                 //Uso el metodo Create de la interface IUserRepository.
             }
@@ -111,34 +100,6 @@ namespace Agenda_api.Controllers
             return NoContent();
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateUser(int Id,CreateAndUpdateUser dto)
-        //{
-        //     await _context.Users.FindAsync(Id);
-        //   // User user =  _userRepository.GetById(Id);
-
-        //    User dto_maped =  _automapper.Map<User>(dto);
-
-        //    _userRepository.Update(dto_maped);            //Vs Code me genero un metodo en IUserRepository
-        //    await _context.SaveChangesAsync();
-
-        //    //var New_Put_User = await _automapper.Map<CreateAndUpdateUser>(Put_User);
-
-        //    return NoContent();
-
-
-        //    //try
-        //    //{
-        //    //    if (id != _userRepository.user.Id)
-        //    //    {
-        //    //        return BadRequest();
-        //    //    }
-        //    //}
-        //    //catch(Exception ex)
-        //    //{
-        //    //    return BadRequest(ex.Message);
-        //    //}
-        //}
 
         [HttpDelete]
         public async Task<IActionResult> DeleteUser(int Id)
@@ -173,33 +134,5 @@ namespace Agenda_api.Controllers
             }
         }
 
-
-
-
-
-
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteUser(int Id)                                 //User Delet                
-        //{
-        //    try
-        //    {
-        //        if (_userRepository.GetById(Id).Role ==0)        //En esta parte seguramente hay que cambiar esta condicion y preguntar si el ROL es 1 o 0
-        //        {
-        //            _userRepository.Archive(Id);         //Paso como parametro el Id.
-        //        }
-        //        else
-        //        {
-        //            _userRepository.Delete(Id);
-        //        }
-        //        return StatusCode(204);
-
-
-        //        //    }
-        //        //    catch (Exception ex)
-        //        //    {
-        //        //        return BadRequest(ex.Message);
-        //        //    } 
-        //        //}     
-        //    }
     }
 }

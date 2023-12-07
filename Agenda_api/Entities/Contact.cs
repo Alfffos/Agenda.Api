@@ -12,12 +12,13 @@ public class Contact
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public string Name { get; set; }
-    public int? CelularNumber { get; set; }
-    public int? TelephoneNumber { get; set; }
+    public string? CelularNumber { get; set; }
+    public string? TelephoneNumber { get; set; }
     public string Description = string.Empty;
     [ForeignKey("UserId")]
     public User User { get; set; }
     public int UserId { get; set; }
+    public bool Favorite { get; set; }  
 
 }
 

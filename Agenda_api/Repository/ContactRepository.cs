@@ -28,6 +28,7 @@ namespace Agenda_api.Repository
                 Description = dto.Description,
                 Name = dto.Name,
                 TelephoneNumber = dto.TelephoneNumber,
+                Favorite = dto.favorite,
                 UserId = userId                                // aca es donde se le asigna el usuario al contacto creado.
    
             };
@@ -54,6 +55,11 @@ namespace Agenda_api.Repository
             return await _context.Contacts.Where(c => c.User.Id == id).ToListAsync();
         }
 
+        public async Task<List<Contact>> Get_fav(int id)  //Recibe el id del User como parametro y devuelve una lista de tipo Contacts.
+        {
+            return await _context.Contacts.Where(u => u.User.Id == id && u.Favorite).ToListAsync(); // Consulta por el Usuario correspondiente y si esta en favs.
+        }
+
         public async Task Update(int id, CreateAndUpdateContact dto)
         {
             int contac_id = id;
@@ -65,50 +71,14 @@ namespace Agenda_api.Repository
                 contacItem.Name = contac_map.Name;
                 contacItem.CelularNumber = contac_map.CelularNumber;
                 contacItem.TelephoneNumber = contac_map.TelephoneNumber;
+                contacItem.Favorite = contac_map.Favorite;
                 
-                /*wait _context.Contacts.AddAsync(_mapper.Map<Contact>(dto));*/
                 await _context.SaveChangesAsync();
             }
                                     
         }
+        
     }
-}
-
-        //        public void Create(CreateAndUpdateContact dto, int id)
-        //        {
-        //            Contact contact = _mapper.Map<Contact>(dto);
-        //            contact.UserId = id;
-        //            _context.Contacts.Add(contact);
-        //            _context.SaveChanges();
-
-        //        }
-
-        //        public void Delete(int id)
-        //        {
-        //            _context.Contacts.Remove(_context.Contacts.Single(c => c.Id == id));      
-        //            _context.SaveChanges();
-
-        //        }
-
-        //        public List<Contact> GetAllByUser(int id)
-        //        {
-        //            return _context.Contacts.Where(c => c.User.Id == id).ToList();
-        //        }
-
-        //        public void Update(CreateAndUpdateContact dto)
-        //        {
-
-        //            _context.Contacts.Update(_mapper.Map<Contact>(dto));
-        //            _context.SaveChanges();
-
-        //        }
-        //        //public void Update(CreateAndUpdateContact dto)
-        //        //{
-        //        //    Contact New_contact = _mapper.Map<Contact>(dto);
-
-        //        //    _context.Contacts.Update(_mapper.Map<Contact>(New_contact));
-        //        //    _context.SaveChanges();
-        //        //}
-        //    }
+} 
 
     

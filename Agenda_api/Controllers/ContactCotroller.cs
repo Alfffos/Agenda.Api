@@ -24,11 +24,14 @@ namespace Agenda_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()                   //Creo un metodo GetAll() que consume de la interfaz de IContactRepositoy el metodo GetAll().
+        public async Task<IActionResult> GetAll()                   //Este metodo sirve para listar todos los usuarios 
         {
-            int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
-            return Ok(await _contactRepository.GetAllByUser(userId));
+            int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);     //Accedo a la claim
+            return Ok(await _contactRepository.GetAllByUser(userId));           
         }
+
+
+
         [HttpGet]
         [Route("{id}")]          // Saco los {} del "Get_Id" porque si pongo [] corchetes me agrega como propiedad nueva en la peticion del ID
 
@@ -54,21 +57,6 @@ namespace Agenda_api.Controllers
             }
         }
 
-        //public IActionResult GetOne(int id)
-        //{
-        //    try                                     
-        //    {
-        //        int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);       //Accedo a la Claim
-        //        return Ok(_contactRepository.GetAllByUser(userId).Where(x => x.Id == id));
-        //    }
-        //    catch (Exception ex)                          // Agrego el try and catch para que tire un mensaje de error por las dudas.
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
-
         [HttpPost]
         public async Task<IActionResult> CreateContact(CreateAndUpdateContact createContactDto)
         {
@@ -78,7 +66,7 @@ namespace Agenda_api.Controllers
                 int userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);          // Con esto se accede a las claims del Dto
                 await _contactRepository.Create(createContactDto, userId);
 
-                //return NoContent();
+                
                 return Created("Created", createContactDto);
             }
             catch (Exception ex)
@@ -104,18 +92,40 @@ namespace Agenda_api.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteContactById(int id)
         {
-            var role = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("role"));
-            if(role.Value == "Admin")
+            try
             {
-                
                 await _contactRepository.Delete(id);
             }
-            else
+            catch (Exception ex)
             {
-                await _userRepository.Archive(id);
-                
+                return NotFound(ex.Message);
             }
+
             return NoContent();
+        }
+
+
+        [HttpGet]
+        [Route("favs")]
+        public async Task<IActionResult> GetFavorits()
+        {
+            try
+            {
+                int id = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier")).Value);
+                List<Contact> contacts_fav = await _contactRepository.Get_fav(id);
+                if(contacts_fav.Count > 0)      //si no hay ningun contacto en fav que retorne NotFound.
+                {
+                    return Ok(contacts_fav);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

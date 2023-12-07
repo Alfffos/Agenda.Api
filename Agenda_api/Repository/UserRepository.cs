@@ -20,13 +20,6 @@ namespace Agenda_api.Repository
             _mapper=mapper;
         }
 
-        //public async Task Archive(int id)
-        //{
-        //    User user = _context.Users.SingleOrDefault(u => u.Id == id);             //Guardo el User a cambiar en una variable
-        //    user.State = Models.Enum.State.Archived;                                // Le cambio el valor de active a archive       
-        //    _context.Update(user);                                                  //Actualizo el user
-        //     await _context.SaveChangesAsync();
-        //}
 
         public async Task Create(CreateAndUpdateUser dto)
         {
@@ -50,28 +43,20 @@ namespace Agenda_api.Repository
                 userItem.Email = user_update.Email;
                 userItem.Password = user_update.Password;
 
-
-                //await _context.Users.AddAsync(_mapper.Map<User>(dto));   // aca mapeo el dto a user y se lo agrego al context.
                 await _context.SaveChangesAsync();
             }
             
 
         }
 
-        //public async Task Delete(int id)
-        //{
-        //    _context.Users.Remove(_context.Users.Single(u => u.Id == id));
-        //    await _context.SaveChangesAsync();
-        //}
-
         public async Task<List<User>> GetAll()
         {
-            return await _context.Users.ToListAsync();     //OK
+            return await _context.Users.ToListAsync();     
         }
 
         public async Task<User> GetById(int userId)
         {
-            return await _context.Users.FindAsync(userId);   //
+            return await _context.Users.FindAsync(userId);   
         }
 
 
@@ -83,73 +68,17 @@ namespace Agenda_api.Repository
 
         public async Task Delete(int id)
         {
-            _context.Users.Remove(_context.Users.Single(u => u.Id == id));
+            _context.Users.Remove(_context.Users.Single(u => u.Id == id));          
             await _context.SaveChangesAsync();
         }
 
         public async Task Archive(int id)
         {
-            User user = _context.Users.SingleOrDefault(u => u.Id == id);             //Guardo el User a cambiar en una variable
-           user.State = Models.Enum.State.Archived;                                // Le cambio el valor de active a archive       
-           _context.Update(user);                                                  //Actualizo el user
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);           
+           user.State = Models.Enum.State.Archived;                                       
+           _context.Update(user);                                                  
            await _context.SaveChangesAsync();
 
         }
-
-
-
-        //    public void Create(CreateAndUpdateUser dto)
-        //    {
-        //        _context.Users.Add(_mapper.Map<User>(dto));
-        //        _context.SaveChanges();
-        //    }
-
-        //    public void Delete(int id)
-        //    {
-        //        _context.Users.Remove(_context.Users.Single(u => u.Id == id));
-        //        _context.SaveChanges();
-        //    }
-
-        //    //public List<User> GetAll()
-        //    //{
-        //    //    return _context.Users.ToList();
-        //    //}
-
-
-
-        //    public User? GetById(int userId)
-        //    {
-        //        return _context.Users.SingleOrDefault(u => u.Id == userId);
-        //    }
-
-        //    public void Update(CreateAndUpdateUser dto)
-        //    {
-        //        _context.Users.Add(_mapper.Map<User>(dto));
-        //        _context.SaveChanges();
-        //    }
-
-        //    public User? Validate(AutenticationRequestBody authRequestBody)
-        //    {
-        //        return  _context.Users.FirstOrDefault(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
-        //    }
-        //    public void Archive(int id)
-        //    {
-        //        User user = _context.Users.SingleOrDefault(u => u.Id == id);
-        //        if (user != null)
-        //        {
-        //            user.State = Models.Enum.State.Archived;
-        //            _context.Update(user);
-        //        }
-        //        _context.SaveChanges();
-        //    }
-
-
-        //    public void Update(User dto)
-        //    {
-        //        _context.Users.Add(_mapper.Map<User>(dto));
-        //        _context.SaveChanges();
-        //    }
-
-        //}
     }
 }

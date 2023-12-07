@@ -16,7 +16,7 @@ namespace Agenda_api.Profiles
 
             //Estos 2 mapas sirver para recibir datos de creacion de parte del front
             CreateMap<CreateAndUpdateUser, User>();
-            //CreateMap<GetUserByIdResponse, User>();
+            //CreateMap<GetUserByIdResponse, User>();           //Este no se usa, ya que "GetUserById" es para devolver datos y no me sirve de nada mapear ese dto a User.
             
 
         }
