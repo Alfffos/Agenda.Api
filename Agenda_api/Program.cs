@@ -89,7 +89,7 @@ builder.Services.AddSwaggerGen(setupAction =>
     {
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
-        Description = "Ac� pegar el token generado al loguearse."
+        Description = "Aca pegar el token generado al loguearse."
     });
 
     setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -108,8 +108,8 @@ builder.Services.AddSwaggerGen(setupAction =>
 builder.Services.AddDbContext<AgendaApiContext>(dbContextOptions => dbContextOptions.UseSqlite(
     builder.Configuration["ConnectionStrings:AgendaAPIDBConnectionString"]));
 
-builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntenticaci�n que tenemos que elegir despu�s en PostMan para pasarle el token
-    .AddJwtBearer(options => //Ac� definimos la configuraci�n de la autenticaci�n. le decimos qu� cosas queremos comprobar. La fecha de expiraci�n se valida por defecto.
+builder.Services.AddAuthentication("Bearer") 
+    .AddJwtBearer(options => //Aca definimos la configuracion de la autenticacion. le decimos que cosas queremos comprobar. La fecha de expiracion se valida por defecto.
     {
         options.TokenValidationParameters = new()
         {
