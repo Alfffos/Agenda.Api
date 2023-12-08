@@ -60,8 +60,9 @@ namespace Agenda_api.Controllers
 
 
         }
-
+        
         [HttpPost]
+        [AllowAnonymous]    // Con esto hago que no se requiera el token de authentication para crear un nuevo usuario.
         public async Task<IActionResult> CreateUser(CreateAndUpdateUser dto)             //Metodo para crear un User
         {
             try

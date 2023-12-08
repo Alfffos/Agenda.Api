@@ -11,7 +11,7 @@ using System.Text;
 namespace AgendaApi.Controllers
 {
     [Route("api/authentication")]
-    [ApiController]
+    [ApiController] 
     public class AuthenticationController : ControllerBase
     {
         private readonly IConfiguration _config;
