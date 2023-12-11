@@ -12,8 +12,6 @@ namespace Agenda_api.Models.DTOs
         public bool favorite { get; set; }
 
         public string Description = String.Empty;
-        public User? User;
-
-                
+        public User? User;         
     }
 }
